@@ -1,147 +1,50 @@
-# ToDo-лист на React Native
+# Welcome to your Expo app 👋
 
-## Цель:
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-Разработать мобильное приложение ToDo-лист на React Native.
+## Get started
 
-## Функциональные требования:
+1. Install dependencies
 
-- Список задач:
-    - Отображение списка задач с возможностью отметки как выполненной (checkbox или аналог).
-    - Возможность удаления задачи (удаление через кнопку).
-      Поддержка фильтров: все, активные, выполненные\*
-- Добавление задачи:
-    - Форма с полем ввода текста.
-    - Кнопка для сохранения задачи.
+   ```bash
+   npm install
+   ```
 
-## Параллели между React Web и React Native
+2. Start the app
 
-| React Web                            | React Native               |
-| ------------------------------------ | -------------------------- |
-| &lt;div&gt;, &lt;span&gt;, &lt;p&gt; | &lt;View&gt;, &lt;Text&gt; |
-| CSS                                  | StyleSheet.create()        |
-| DOM-события (onClick)                | События (onPress)          |
+   ```bash
+    npx expo start
+   ```
 
-## Работа с полем ввода
+In the output, you'll find options to open the app in a
 
-| React Web                        | React Native                |
-| -------------------------------- | --------------------------- |
-| &lt;input type="text" /&gt;      | &lt;TextInput /&gt;         |
-| Атрибут value и событие onChange | Пропсы value и onChangeText |
-| Событие onSubmit                 | Событие onSubmitEditing     |
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-### Пример применение объекта поля ввода
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-```tsx
-<View style={styles.container}>
-    <TextInput
-        style={styles.input}
-        placeholder="Введите задачу"
-        value={task}
-        onChangeText={setTask} // Обработка изменения текста
-        onSubmitEditing={handleSubmit} // Отправка по нажатию Enter (на мобильной клавиатуре)
-        returnKeyType="done" // Настройка кнопки "Enter" на клавиатуре
-    />
-    <Button title="Добавить" onPress={handleSubmit} />
-</View>
+## Get a fresh project
+
+When you're ready, run:
+
+```bash
+npm run reset-project
 ```
 
-### Рендер элементов
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-FlatList рендерит только видимые элементы и немного элементов вокруг них (offscreen), что снижает нагрузку на память.
+## Learn more
 
-#### Пример использование FlatList
+To learn more about developing your project with Expo, look at the following resources:
 
-```tsx
-import React from 'react'
-import { View, Text, FlatList, StyleSheet, Image } from 'react-native'
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
-// Данные для списка контактов
-const contacts = [
-    {
-        id: '1',
-        name: 'Алексей Иванов',
-        phone: '+7 912 345-67-89',
-        avatar: 'https://via.placeholder.com/50',
-    },
-    {
-        id: '2',
-        name: 'Мария Смирнова',
-        phone: '+7 923 456-78-90',
-        avatar: 'https://via.placeholder.com/50',
-    },
-    {
-        id: '3',
-        name: 'Дмитрий Кузнецов',
-        phone: '+7 934 567-89-01',
-        avatar: 'https://via.placeholder.com/50',
-    },
-    {
-        id: '4',
-        name: 'Ольга Попова',
-        phone: '+7 945 678-90-12',
-        avatar: 'https://via.placeholder.com/50',
-    },
-]
+## Join the community
 
-export default function App() {
-    return (
-        <View style={styles.container}>
-            <Text style={styles.header}>Список контактов</Text>
+Join our community of developers creating universal apps.
 
-            <FlatList
-                data={contacts} // 📋 Источник данных для списка
-                keyExtractor={(item) => item.id} // 🔑 Уникальный ключ для каждого элемента
-                renderItem={(
-                    { item }, // 🎨 Отображение каждого элемента
-                ) => (
-                    <View style={styles.contactItem}>
-                        <Image
-                            source={{ uri: item.avatar }}
-                            style={styles.avatar}
-                        />
-                        <View>
-                            <Text style={styles.name}>{item.name}</Text>
-                            <Text style={styles.phone}>{item.phone}</Text>
-                        </View>
-                    </View>
-                )}
-            />
-        </View>
-    )
-}
-```
-
-## Чекбокс
-
-Switch — это компонент-переключатель (toggle), который выполняет ту же роль, что и чекбокс.
-
-| Пропс         | Описание                               | Пример                        |
-| ------------- | -------------------------------------- | ----------------------------- |
-| value         | Состояние (вкл/выкл)                   | value={isEnabled}             |
-| onValueChange | Функция-обработчик изменения состояния | onValueChange={toggleSwitch}  |
-| thumbColor    | Цвет ползунка                          | thumbColor="#4CAF50"          |
-| trackColor    | Цвет фона для состояний true и false   | trackColor={{ true: 'blue' }} |
-
-### Использование Switch
-
-```tsx
-export default function App() {
-  const [isEnabled, setIsEnabled] = useState(false);
-
-  const toggleSwitch = () => setIsEnabled((prev) => !prev);
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Согласен с условиями:</Text>
-      <Switch
-
-        value={isEnabled}       // Значение (вкл/выкл)
-        onValueChange={toggleSwitch} // Обработчик изменения
-        thumbColor={isEnabled ? '#4CAF50' : '#f4f3f4'} // Цвет ползунка
-        trackColor={{ false: '#767577', true: '#81b0ff' }} // Цвет фона
-      />
-    </View>
-  );
-}
-```
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
